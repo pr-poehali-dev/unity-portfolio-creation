@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import MatrixRain from '@/components/MatrixRain';
 
 interface TeamMember {
   name: string;
@@ -153,6 +154,7 @@ const Index = () => {
                            radial-gradient(circle at 40% 20%, rgba(234, 88, 12, 0.06) 0%, transparent 50%)`
         }} />
       </div>
+      <MatrixRain />
       
       {particles.map((particle, i) => (
         <div
@@ -191,9 +193,7 @@ const Index = () => {
       </nav>
 
       <section id="home" className="py-20 px-4 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent -z-10" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow -z-10" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow -z-10" style={{animationDelay: '1.5s'}} />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent opacity-50" style={{height: '150%'}} />
         
         <div className="container mx-auto max-w-4xl text-center relative z-10">
           <Badge className="mb-4 text-sm px-4 py-1 animate-pulse-glow">Unity Developer</Badge>
@@ -222,8 +222,7 @@ const Index = () => {
       </section>
 
       <section id="team" className="py-20 px-4 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-muted/30 to-transparent -z-10" />
-        <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/8 to-transparent opacity-60" style={{height: '150%', top: '-25%'}} />
         
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-12">
@@ -264,8 +263,7 @@ const Index = () => {
       </section>
 
       <section id="projects" className="py-20 px-4 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-transparent -z-10" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/6 to-transparent opacity-70" style={{height: '150%', top: '-25%'}} />
         
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-12">
@@ -299,8 +297,7 @@ const Index = () => {
       </section>
 
       <section id="docs" className="py-20 px-4 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-muted/40 via-muted/20 to-transparent -z-10" />
-        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow -z-10" style={{animationDelay: '2s'}} />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/8 to-transparent opacity-60" style={{height: '150%', top: '-25%'}} />
         
         <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-12">
@@ -339,7 +336,7 @@ const Index = () => {
       </section>
 
       <section id="contacts" className="py-20 px-4 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-background -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent opacity-50" style={{height: '150%', top: '-25%'}} />
         
         <div className="container mx-auto max-w-4xl text-center relative z-10">
           <h2 className="text-4xl font-bold mb-4">Контакты</h2>
