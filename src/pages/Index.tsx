@@ -44,7 +44,7 @@ const Index = () => {
 
   const teamMembers: TeamMember[] = [
     {
-      name: 'JJS',
+      name: 'tohiro',
       role: 'Lead Developer • Programmer • Team Lead',
       avatar: '👨‍💻'
     },
@@ -131,9 +131,27 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative">
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(234,88,12,0.15),transparent_50%),radial-gradient(circle_at_bottom_left,_rgba(234,88,12,0.1),transparent_50%)]" />
-        <div className="absolute inset-0 game-grid-bg opacity-20" />
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-[#0a0a0a] via-[#1a0a0a] to-[#0a0a0a]">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(rgba(234, 88, 12, 0.03) 2px, transparent 2px),
+              linear-gradient(90deg, rgba(234, 88, 12, 0.03) 2px, transparent 2px),
+              linear-gradient(rgba(234, 88, 12, 0.02) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(234, 88, 12, 0.02) 1px, transparent 1px)
+            `,
+            backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+            backgroundPosition: '-2px -2px, -2px -2px, -1px -1px, -1px -1px'
+          }} />
+        </div>
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] animate-pulse-glow" />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-primary/15 rounded-full blur-[120px] animate-pulse-glow" style={{animationDelay: '2s'}} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[150px]" />
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(234, 88, 12, 0.1) 0%, transparent 50%),
+                           radial-gradient(circle at 80% 80%, rgba(234, 88, 12, 0.08) 0%, transparent 50%),
+                           radial-gradient(circle at 40% 20%, rgba(234, 88, 12, 0.06) 0%, transparent 50%)`
+        }} />
       </div>
       
       {particles.map((particle, i) => (
