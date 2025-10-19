@@ -20,6 +20,14 @@ interface Project {
   longDescription: string;
 }
 
+interface Article {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  tags: string[];
+}
+
 const Index = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [particles, setParticles] = useState<Array<{x: number, y: number, size: number, delay: number}>>([]);
@@ -36,19 +44,14 @@ const Index = () => {
 
   const teamMembers: TeamMember[] = [
     {
-      name: 'Разработчик 1',
-      role: 'Lead Developer',
-      avatar: '🎮'
+      name: 'JJS',
+      role: 'Lead Developer • Programmer • Team Lead',
+      avatar: '👨‍💻'
     },
     {
-      name: 'Разработчик 2',
+      name: 'Kisell',
       role: 'Game Designer',
       avatar: '🎨'
-    },
-    {
-      name: 'Разработчик 3',
-      role: '3D Artist',
-      avatar: '🎭'
     }
   ];
 
@@ -88,6 +91,37 @@ const Index = () => {
     }
   ];
 
+  const articles: Article[] = [
+    {
+      id: 1,
+      title: 'Оптимизация Unity проектов: Best Practices',
+      description: 'Подробный гайд по оптимизации производительности игр на Unity',
+      date: '15 окт 2024',
+      tags: ['Unity', 'Performance', 'Optimization']
+    },
+    {
+      id: 2,
+      title: 'Архитектура игровых проектов на C#',
+      description: 'Как правильно структурировать код в Unity играх',
+      date: '10 окт 2024',
+      tags: ['C#', 'Architecture', 'Unity']
+    },
+    {
+      id: 3,
+      title: 'Реализация системы сохранений',
+      description: 'Различные подходы к сохранению прогресса игрока',
+      date: '5 окт 2024',
+      tags: ['Unity', 'Save System', 'Tutorial']
+    },
+    {
+      id: 4,
+      title: 'Procedural Generation в Unity',
+      description: 'Создание процедурно генерируемых уровней и контента',
+      date: '1 окт 2024',
+      tags: ['Unity', 'PCG', 'Advanced']
+    }
+  ];
+
   const socialLinks = [
     { name: 'Discord', icon: 'MessageCircle', url: '#' },
     { name: 'Telegram', icon: 'Send', url: '#' },
@@ -96,13 +130,16 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      <div className="fixed inset-0 game-grid-bg opacity-30 pointer-events-none" />
-      <div className="fixed inset-0 particles-bg pointer-events-none" />
+    <div className="min-h-screen relative">
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(234,88,12,0.15),transparent_50%),radial-gradient(circle_at_bottom_left,_rgba(234,88,12,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 game-grid-bg opacity-20" />
+      </div>
+      
       {particles.map((particle, i) => (
         <div
           key={i}
-          className="fixed rounded-full bg-primary/20 animate-float pointer-events-none"
+          className="fixed rounded-full bg-primary/20 animate-float pointer-events-none z-0"
           style={{
             left: `${particle.x}%`,
             top: `${particle.y}%`,
@@ -112,7 +149,8 @@ const Index = () => {
           }}
         />
       ))}
-      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+
+      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-primary/10">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -127,14 +165,19 @@ const Index = () => {
               <a href="#home" className="story-link font-medium hover:text-primary transition-colors">Главная</a>
               <a href="#team" className="story-link font-medium hover:text-primary transition-colors">Команда</a>
               <a href="#projects" className="story-link font-medium hover:text-primary transition-colors">Проекты</a>
+              <a href="#docs" className="story-link font-medium hover:text-primary transition-colors">Документация</a>
               <a href="#contacts" className="story-link font-medium hover:text-primary transition-colors">Контакты</a>
             </div>
           </div>
         </div>
       </nav>
 
-      <section id="home" className="py-20 px-4 relative z-10">
-        <div className="container mx-auto max-w-4xl text-center">
+      <section id="home" className="py-20 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent -z-10" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow -z-10" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow -z-10" style={{animationDelay: '1.5s'}} />
+        
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
           <Badge className="mb-4 text-sm px-4 py-1 animate-pulse-glow">Unity Developer</Badge>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent glitch-text" data-text="Создаю игры, которые запоминаются">
             Создаю игры, которые запоминаются
@@ -145,8 +188,6 @@ const Index = () => {
             уникального игрового опыта для различных платформ.
           </p>
           <div className="flex flex-wrap gap-4 justify-center mb-12">
-            <div className="absolute -left-20 top-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
-            <div className="absolute -right-20 bottom-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" style={{animationDelay: '1.5s'}} />
             <Badge variant="secondary" className="px-4 py-2">C#</Badge>
             <Badge variant="secondary" className="px-4 py-2">Unity 3D</Badge>
             <Badge variant="secondary" className="px-4 py-2">Mobile</Badge>
@@ -162,22 +203,25 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="team" className="py-20 px-4 bg-muted/30 relative z-10">
-        <div className="container mx-auto max-w-6xl">
+      <section id="team" className="py-20 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/50 via-muted/30 to-transparent -z-10" />
+        <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent -z-10" />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">JJS GAMES</h2>
+            <h2 className="text-4xl font-bold mb-4 glitch-text" data-text="JJS GAMES">JJS GAMES</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Команда создана для объединения талантливых разработчиков и воплощения в жизнь 
               амбициозных игровых проектов. Мы фокусируемся на качестве, инновациях и создании 
               незабываемого игрового опыта.
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-3xl mx-auto">
             {teamMembers.map((member, index) => (
               <Card key={index} className="group hover:shadow-lg hover:shadow-primary/20 transition-all hover:scale-105 hover:-translate-y-2 border-primary/20">
-                <CardContent className="p-6 text-center">
-                  <div className="text-6xl mb-4 animate-float" style={{animationDelay: `${index * 0.5}s`}}>{member.avatar}</div>
-                  <h3 className="font-semibold text-xl mb-2">{member.name}</h3>
+                <CardContent className="p-8 text-center">
+                  <div className="text-7xl mb-4 animate-float" style={{animationDelay: `${index * 0.5}s`}}>{member.avatar}</div>
+                  <h3 className="font-semibold text-2xl mb-2">{member.name}</h3>
                   <p className="text-muted-foreground">{member.role}</p>
                 </CardContent>
               </Card>
@@ -201,8 +245,11 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="projects" className="py-20 px-4 relative z-10">
-        <div className="container mx-auto max-w-6xl">
+      <section id="projects" className="py-20 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/10 to-transparent -z-10" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow -z-10" />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Мои проекты</h2>
             <p className="text-lg text-muted-foreground">Портфолио реализованных игровых проектов</p>
@@ -215,7 +262,8 @@ const Index = () => {
                 style={{animationDelay: `${index * 0.1}s`}}
                 onClick={() => setSelectedProject(project)}
               >
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-video overflow-hidden relative">
+                  <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
                   <img 
                     src={project.image} 
                     alt={project.title}
@@ -232,8 +280,50 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contacts" className="py-20 px-4 bg-muted/30 relative z-10">
-        <div className="container mx-auto max-w-4xl text-center">
+      <section id="docs" className="py-20 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-muted/40 via-muted/20 to-transparent -z-10" />
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow -z-10" style={{animationDelay: '2s'}} />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Документация</h2>
+            <p className="text-lg text-muted-foreground">Статьи и гайды для разработчиков</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {articles.map((article, index) => (
+              <Card 
+                key={article.id}
+                className="group cursor-pointer hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 border-primary/10"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                      <Icon name="FileText" className="text-primary" size={24} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg mb-2 story-link inline-block">{article.title}</h3>
+                      <p className="text-muted-foreground text-sm mb-3">{article.description}</p>
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-2 flex-wrap">
+                          {article.tags.map((tag, i) => (
+                            <Badge key={i} variant="secondary" className="text-xs">{tag}</Badge>
+                          ))}
+                        </div>
+                        <span className="text-xs text-muted-foreground">{article.date}</span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contacts" className="py-20 px-4 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-background -z-10" />
+        
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
           <h2 className="text-4xl font-bold mb-4">Контакты</h2>
           <p className="text-lg text-muted-foreground mb-8">Свяжитесь со мной удобным способом</p>
           <div className="flex flex-wrap gap-4 justify-center">
@@ -256,7 +346,7 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="py-8 px-4 border-t">
+      <footer className="py-8 px-4 border-t border-primary/10 relative">
         <div className="container mx-auto text-center text-muted-foreground">
           <p>&copy; 2025 JJS GAMES. Все права защищены.</p>
         </div>
