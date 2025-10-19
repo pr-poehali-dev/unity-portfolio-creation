@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -22,6 +22,17 @@ interface Project {
 
 const Index = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [particles, setParticles] = useState<Array<{x: number, y: number, size: number, delay: number}>>([]);
+
+  useEffect(() => {
+    const newParticles = Array.from({ length: 20 }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 4 + 2,
+      delay: Math.random() * 5
+    }));
+    setParticles(newParticles);
+  }, []);
 
   const teamMembers: TeamMember[] = [
     {
@@ -85,7 +96,22 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative overflow-hidden">
+      <div className="fixed inset-0 game-grid-bg opacity-30 pointer-events-none" />
+      <div className="fixed inset-0 particles-bg pointer-events-none" />
+      {particles.map((particle, i) => (
+        <div
+          key={i}
+          className="fixed rounded-full bg-primary/20 animate-float pointer-events-none"
+          style={{
+            left: `${particle.x}%`,
+            top: `${particle.y}%`,
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            animationDelay: `${particle.delay}s`
+          }}
+        />
+      ))}
       <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
@@ -95,7 +121,7 @@ const Index = () => {
                 alt="JJS GAMES"
                 className="w-12 h-12 rounded-lg"
               />
-              <span className="text-xl font-bold text-primary">JJS GAMES</span>
+              <span className="text-xl font-bold text-primary glitch-text" data-text="JJS GAMES">JJS GAMES</span>
             </div>
             <div className="hidden md:flex gap-6">
               <a href="#home" className="story-link font-medium hover:text-primary transition-colors">Главная</a>
@@ -107,10 +133,10 @@ const Index = () => {
         </div>
       </nav>
 
-      <section id="home" className="py-20 px-4">
+      <section id="home" className="py-20 px-4 relative z-10">
         <div className="container mx-auto max-w-4xl text-center">
-          <Badge className="mb-4 text-sm px-4 py-1">Unity Developer</Badge>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <Badge className="mb-4 text-sm px-4 py-1 animate-pulse-glow">Unity Developer</Badge>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent glitch-text" data-text="Создаю игры, которые запоминаются">
             Создаю игры, которые запоминаются
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
@@ -119,6 +145,8 @@ const Index = () => {
             уникального игрового опыта для различных платформ.
           </p>
           <div className="flex flex-wrap gap-4 justify-center mb-12">
+            <div className="absolute -left-20 top-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
+            <div className="absolute -right-20 bottom-20 w-40 h-40 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" style={{animationDelay: '1.5s'}} />
             <Badge variant="secondary" className="px-4 py-2">C#</Badge>
             <Badge variant="secondary" className="px-4 py-2">Unity 3D</Badge>
             <Badge variant="secondary" className="px-4 py-2">Mobile</Badge>
@@ -134,7 +162,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="team" className="py-20 px-4 bg-muted/30">
+      <section id="team" className="py-20 px-4 bg-muted/30 relative z-10">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">JJS GAMES</h2>
@@ -146,9 +174,9 @@ const Index = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {teamMembers.map((member, index) => (
-              <Card key={index} className="group hover:shadow-lg transition-all hover:scale-105">
+              <Card key={index} className="group hover:shadow-lg hover:shadow-primary/20 transition-all hover:scale-105 hover:-translate-y-2 border-primary/20">
                 <CardContent className="p-6 text-center">
-                  <div className="text-6xl mb-4">{member.avatar}</div>
+                  <div className="text-6xl mb-4 animate-float" style={{animationDelay: `${index * 0.5}s`}}>{member.avatar}</div>
                   <h3 className="font-semibold text-xl mb-2">{member.name}</h3>
                   <p className="text-muted-foreground">{member.role}</p>
                 </CardContent>
@@ -173,24 +201,25 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="projects" className="py-20 px-4">
+      <section id="projects" className="py-20 px-4 relative z-10">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Мои проекты</h2>
             <p className="text-lg text-muted-foreground">Портфолио реализованных игровых проектов</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            {projects.map((project) => (
+            {projects.map((project, index) => (
               <Card 
                 key={project.id} 
-                className="group cursor-pointer hover:shadow-xl transition-all overflow-hidden"
+                className="group cursor-pointer hover:shadow-xl hover:shadow-primary/30 transition-all duration-500 overflow-hidden hover:-translate-y-3 hover:rotate-1 border-primary/10"
+                style={{animationDelay: `${index * 0.1}s`}}
                 onClick={() => setSelectedProject(project)}
               >
                 <div className="aspect-video overflow-hidden">
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-cover group-hover:scale-110 group-hover:rotate-2 transition-transform duration-500"
                   />
                 </div>
                 <CardContent className="p-6">
@@ -203,7 +232,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contacts" className="py-20 px-4 bg-muted/30">
+      <section id="contacts" className="py-20 px-4 bg-muted/30 relative z-10">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-4">Контакты</h2>
           <p className="text-lg text-muted-foreground mb-8">Свяжитесь со мной удобным способом</p>
@@ -213,7 +242,7 @@ const Index = () => {
                 key={index} 
                 variant="outline" 
                 size="lg"
-                className="group"
+                className="group hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:scale-110 hover:-translate-y-1"
                 asChild
               >
                 <a href={link.url} className="flex items-center gap-2">
